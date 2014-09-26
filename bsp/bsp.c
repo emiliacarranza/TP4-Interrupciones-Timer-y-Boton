@@ -20,12 +20,21 @@ GPIO_TypeDef* leds_port[] = { GPIOD, GPIOD, GPIOD, GPIOD };
 /* Leds disponibles */
 const uint16_t leds[] = { LED_V, LED_R, LED_N, LED_A };
 
+extern void APP_ISR_sw(void);
+extern void APP_ISR_1ms(void);
+volatile uint16_t bsp_contMS =0;
+
+
 void led_on(uint8_t led) {
 	GPIO_SetBits(leds_port[led], leds[led]);
 }
 
 void led_off(uint8_t led) {
 	GPIO_ResetBits(leds_port[led], leds[led]);
+}
+
+void led_toggle(uint8_t led) {
+	GPIO_ToggleBits(leds_port[led], leds[led]);
 }
 
 uint8_t sw_getState(void) {
@@ -41,7 +50,8 @@ void EXTI0_IRQHandler(void) {
 			{
 		EXTI_ClearFlag(EXTI_Line0); // Limpiamos la Interrupcion
 		// Rutina:
-		GPIO_ToggleBits(leds_port[1], leds[1]);
+		APP_ISR_sw();
+		/*GPIO_ToggleBits(leds_port[1], leds[1]);*/
 	}
 }
 
@@ -49,26 +59,34 @@ void EXTI0_IRQHandler(void) {
  * @brief Interrupcion llamada al pasar 1ms
  */
 void TIM2_IRQHandler(void) {
-	static uint16_t count = 0;
+
 
 	if (TIM_GetITStatus(TIM2, TIM_IT_Update) != RESET) {
 		TIM_ClearITPendingBit(TIM2, TIM_IT_Update);
-		if (count++ > 1000) {
-			GPIO_ToggleBits(leds_port[0], leds[0]);
-			count = 0;
+		APP_ISR_1ms();
+
+		if(bsp_contMS){
+			bsp_contMS--;
 		}
+
 	}
 }
 
 void bsp_led_init();
 void bsp_sw_init();
 void bsp_timer_config();
+void bsp_delayMs(uint16_t x);
 
 void bsp_init() {
 	bsp_led_init();
 	bsp_sw_init();
 	bsp_timer_config();
 
+}
+
+void bsp_delayMs(uint16_t x){
+	bsp_contMS = x;
+	while(bsp_contMS);
 }
 
 /**
