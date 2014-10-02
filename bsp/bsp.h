@@ -17,6 +17,8 @@ void led_off(uint8_t led);
 
 void led_toggle(uint8_t led);
 
+void led_setBright(uint8_t led, uint8_t value);
+
 /**
  * @brief Delay por software
  */

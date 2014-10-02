@@ -33,9 +33,9 @@
       <source file="..\..\..\cmsis_lib\include\misc.h" lastModified="148ad3424dd">
          <include file="..\..\..\cmsis_boot\stm32f4xx.h"/>
       </source>
-      <source file="..\..\..\bsp\bsp.h" lastModified="148ad892a5e">
+      <source file="..\..\..\bsp\bsp.h" lastModified="148d19ee7f8">
       </source>
-      <source file="..\..\..\bsp\bsp.c" lastModified="148b2690461">
+      <source file="..\..\..\bsp\bsp.c" lastModified="148d19fb77e">
          <include file="..\..\..\cmsis_boot\stm32f4xx.h"/>
          <include file="..\..\..\cmsis_lib\include\stm32f4xx_gpio.h"/>
          <include file="..\..\..\cmsis_lib\include\stm32f4xx_rcc.h"/>
@@ -63,9 +63,6 @@
       </source>
       <source file="..\..\..\cmsis_lib\source\misc.c" lastModified="148ad3424dd">
          <include file="..\..\..\cmsis_lib\include\misc.h"/>
-      </source>
-      <source file="..\..\..\main.c" lastModified="148b25519fe">
-         <include file="..\..\..\bsp\bsp.h"/>
       </source>
       <source file="..\..\..\cmsis\core_cmFunc.h" lastModified="148ad33b309">
       </source>
